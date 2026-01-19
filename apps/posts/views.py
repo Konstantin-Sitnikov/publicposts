@@ -33,3 +33,14 @@ def like_post(request, post_id):
         setattr(post, 'likesCount', post.likesCount + 1)
         post.save()
         return Response(post.likesCount, status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def delete_post(request, post_id):
+    try:
+        post = Post.objects.get(id=post_id)
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    post.delete()
+    return Response(status=status.HTTP_200_OK)
